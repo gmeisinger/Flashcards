@@ -1,0 +1,108 @@
+List types of OS
+Mainframe, Server, Parallel Computer, Personal Computer, Real-time, Embedded, (Smart card)
+Three levels of Monolithic OS
+Main Procedure, Service Routines, Utility Resources
+Diff between Micro kernel and Monolithic kernel?
+micro kernel only holds privileged code, easier to rebuild process server, but slower due to context switches
+Process states
+created, ready, running, blocked, exit
+How does a batch schedule work?
+Pick a process, run to completion, pick new Process
+How does the OS know when to interrupt a process?
+interrupt timer in hardware
+A PTE keeps track of...
+Process management, file management, memory management
+PTE process management keeps track of...
+registers, program counter, cpu status word, stack pointer, process state, PID, parent PID, signals, process start time, total cpu usage
+PTE File management keeps track of...
+root directory, working dir, file descriptors, user ID, group ID
+PTE memory management keeps track of...
+pointers to text, data, stack OR pointer to page table
+Definition of a Thread:
+A stream of instructions and their associated state
+Thread state: what are the per process items?
+address space, open files, child processes, signals & handlers, accounting info, global variables
+Thread state: what are the per thread items?
+program counter, registers, stack & stack pointer, state
+difference between cpu bound and i/o bound...
+cpu bound processes spend most of their time computing, i/o spend most time waiting or blocked
+Parts of 3-level scheduling:
+arriving jobs go to input queue, admission sched loads them to main mem, memory sched moves jobs from disk to/from main mem, cpu scheduler moves jobs from main mem to/from cpu
+define fairness
+Comparable processes get comparable Service
+what is throughput and how do we compute it?
+number of jobs completed per unit time, #jobs/total time
+what is avg turnaround and how do we compute?
+avg time from job submission to job completion, total time/#jobs
+two types of batch schedules:
+first come first served, shortest job first
+Interactive scheduling algorithms:
+round robin, priority sched, "shortest process next", guaranteed sched, lottery, fair share
+What is guaranteed scheduling?
+N processes get 1/N CPU time
+what is fair share scheduling?
+N users get 1/N CPU time
+What is a Mechanism?
+the way something is done (algorithm)
+what is Policy?
+the rules a particular mechanism should follow
+advantages/disadvantages of user threading?
+creating threads is function call, faster. can cause a process to be greedy without voluntary yields
+advantages/disadvantages of kernel threading?
+creating thread is system call, slower. does not need yields
+types of system calls?
+process control, file manipulation, device manipulation, info maintenance, communication, security
+Critical region goals:
+No two processes can be in their critical region at the same time, no process outside CR may block another process, no process should have to wait forever to enter CR
+Critical Regions are meant to prevent...
+race conditions
+Peterson's Solution handles race conditions using...
+Busy waiting - do nothing, wait for interrupt
+Whats a mutex?
+A simplified version of a semaphore that can only be locked or unlocked
+Try to explain a semaphore... :(
+it has a value, if value > 0 there are more wakeups than sleeps, 2 functions down(), which decrements and possibly sleeps if val < 0, up() increments and possibly wakeup
+explain producer/consumer using semaphores
+3 semaphores: empty(n) - empty spaces; full(0) - full spaces; mutex(1) - down is enter_cr, up is leave_cr;
+What is deadlock?
+A set of processes is deadlocked if each process is waiting for an event that only another process can cause
+4 conditions for deadlock:
+mutual exclusion (resource); Hold & wait (process); No preemption (resource); circular wait
+Why can Critical Regions cause deadlock?
+They are mutually exclusive & not preempt-able
+4 strategies for dealing with deadlock:
+ignore; detect & recover; avoid (possible, but we don't allow it); prevent (DL is impossible)
+What's the stupid Ostrich algorithm?
+do nothing.
+When is a good time to run a Deadlock detection algorithm?
+When system is not busy (maybe idle); run it with low priority?
+Resource trajectories are used to...
+Avoid deadlock
+What's a safe state?
+There exists a schedule that will NOT lead to deadlock
+Describe the Banker's Algorithm
+its a (batch) scheduling algorithm that avoids deadlock by estimating required resources
+two ways to prevent deadlock
+spooling and global numbering
+what is a page?
+a contiguous range of virtual addresses, typically 4kb
+what is a page frame?
+the contiguous range of physical addresses pointed to by a page
+explain the MMU algorithm
+VA / page size -> page#; PT[page#] -> frame#; frame# * page size -> PA(start); PA(start) + offset(VA%pagesize) = real PA 
+What are Overlays?
+hand-written dynamic loading of subsets of a program's code and data
+define Virtual Memory
+Attempt to simulate more memory than exists on the system through automatic "overlays"
+parts of a Page Table Entry:
+protection, dirty bit, referenced bit, valid bit, page frame number
+What's a translation lookaside buffer?
+Cache for Page Table Entries
+What's an Inverted Page Table?
+Instead of a PTE per page, make one per frame
+Two functions of an OS:
+Manage resources, abstract details
+4 resources managed by OS
+CPU time, Memory, I/O devices, security
+memory heirarchy (fastest to slowest):
+registers, cache (SRAM), main memory (DRAM), magnetic disk, magnetic tape
